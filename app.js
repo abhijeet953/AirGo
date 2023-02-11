@@ -508,14 +508,10 @@ app.post("/", function (req, res) {
       // res.write("<p>Weather desciption is " + weatherdesc + ".</p>")
       // res.write("<img src = " + imageurl + ">")
       //   res.send();
-      if (cnt < 1) {
-        cnt++;
-        // console.log(flightDetailsComb);
-      }
       res.render("lists", {
         flightDetailsComb,
       });
-      res.send();
+      // res.send();
     });
   });
 });
