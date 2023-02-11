@@ -17,16 +17,14 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
 // Create and Print pdf --->
 const fs = require("fs");
-const { buildPathHtml, buildPathPdf } = require("./buildPaths");
 var PDFDocument = require("pdfkit");
-const NodePdfPrinter = require("node-pdf-printer");
 
 // Use Methods --->
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("path"));
 app.use(
   session({
-    secret: "secret.",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
   })
@@ -35,18 +33,23 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.set("strictQuery", true);
-const dbUrl = "mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
-mongoose.connect(
-  dbUrl,
-  {
-    useNewUrlParser: true,
-  }
-);
+const dbUrl =
+  "mongodb+srv://" +
+  process.env.DB_USER +
+  ":" +
+  process.env.DB_PASSWORD +
+  "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
+mongoose.connect(dbUrl, {
+  useNewUrlParser: true,
+});
 const userSchema = new mongoose.Schema({
   email: String,
   password: String,
   googleId: String,
-  secret: String,
+  username:{
+    type: String,
+    unique: false
+  }
 });
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
@@ -63,7 +66,7 @@ passport.deserializeUser(function (id, done) {
 passport.use(
   new GoogleStrategy(
     {
-      clientID:process.env.CLIENT_ID,
+      clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL: "http://localhost:3000/auth/google/secrets",
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
@@ -72,7 +75,7 @@ passport.use(
       console.log(profile);
 
       User.findOrCreate(
-        { googleId: profile.id, username: profile.displayName },
+        { googleId: profile.id },
         function (err, user) {
           return cb(err, user);
         }
@@ -93,7 +96,7 @@ app.get(
   passport.authenticate("google", { failureRedirect: "/login" }),
   function (req, res) {
     // Successful authentication, redirect to secrets.
-    res.redirect("/secrets");
+    res.redirect("/");
   }
 );
 app.get("/login", function (req, res) {
@@ -109,32 +112,18 @@ app.get("/register", function (req, res) {
   } else {
     res.render("register");
   }
-  // res.render("register");
 });
-app.get("/secrets", function (req, res) {
-  User.find({ secret: { $ne: null } }, function (err, foundUsers) {
-    if (err) {
-      console.log(err);
-    } else {
-      if (foundUsers) {
-        res.render("secrets", { usersWithSecrets: foundUsers });
-      }
-    }
-  });
-});
-app.get("/submit", function (req, res) {
-  if (req.isAuthenticated()) {
-    res.render("submit");
-  } else {
-    res.redirect("/login");
-  }
-});
+
 app.get("/book", function (req, res) {
-  res.sendFile(__dirname + "/example.pdf");
+  if(req.isAuthenticated()){
+    res.sendFile(__dirname + "/example.pdf");
+  }else{
+    res.redirect('/login');
+  }
 });
 // posts requests..
 app.post("/book", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const doc = new PDFDocument();
   doc.pipe(fs.createWriteStream("example.pdf"));
   const date =
@@ -168,9 +157,11 @@ app.post("/book", async (req, res) => {
 
   doc.moveTo(50, 200).lineTo(550, 200).stroke();
 
-  doc.fontSize(30, {bold: true}).text(`${data_inp.companyName || "Airlines"}`, 50, 210, {
-    align: "center",
-  });
+  doc
+    .fontSize(30, { bold: true })
+    .text(`${data_inp.companyName || "Airlines"}`, 50, 210, {
+      align: "center",
+    });
   const beginningOfPage = 50;
   const endOfPage = 550;
 
@@ -208,36 +199,11 @@ app.post("/book", async (req, res) => {
 
   doc.end();
 
-  // Finalize PDF file
-  const array = [
-    // '\example.pdf',
-    path.resolve("/example.pdf"),
-  ];
-  console.log(array);
-  console.log(__dirname + "/example.pdf");
+  // console.log(__dirname + "/example.pdf");
   res.redirect("/book");
 });
 
-app.post("/submit", function (req, res) {
-  const submittedSecret = req.body.secret;
-  //Once the user is authenticated and their session gets saved, their user details are saved to req.user.
-  // console.log(req.user.id);
-  User.findById(req.user.id, function (err, foundUser) {
-    if (err) {
-      console.log(err);
-    } else {
-      if (foundUser) {
-        foundUser.secret = submittedSecret;
-        foundUser.save(function () {
-          res.redirect("/");
-        });
-      }
-    }
-  });
-});
 app.get("/logout", function (req, res) {
-  // req.logout();
-  // res.redirect("/");
   req.logout(function (err) {
     if (err) {
       return next(err);
@@ -277,119 +243,94 @@ app.post("/login", function (req, res) {
   });
 });
 app.post("/", function (req, res) {
-  if (req.isAuthenticated()) {
-    console.log("yes");
-  } else {
+  if (!req.isAuthenticated()) {
     res.redirect("/login");
-  }
-
-  var source = req.body.sourceCity;
-  var destination = req.body.destinationCity;
-  var date = req.body.date;
-  date = date.replace(/[^a-zA-Z0-9 ]/g, "");
-
-  console.log(source);
-  console.log(destination);
-  console.log(date);
-  const pahtUrl = "/TimeTable/" + source + "/" + destination + "/" + date + "/";
-  console.log(pahtUrl);
-  const options = {
-    method: "GET",
-    hostname: "timetable-lookup.p.rapidapi.com",
-    port: null,
-    // path: "/TimeTable/BOS/LAX/20231117/",
-    path: pahtUrl,
-    headers: {
-      "X-RapidAPI-Key": "404b98d527msh4e8bd32bc2c6824p1ec47ejsne2e84476ee2a",
-      "X-RapidAPI-Host": "timetable-lookup.p.rapidapi.com",
-      useQueryString: true,
-    },
-  };
-  https.get(options, function (response) {
-    const chunks = [];
-    response.on("data", function (chunk) {
-      chunks.push(chunk);
-    });
-    const flightDetailsComb = [];
-    response.on("end", function () {
-      const body = Buffer.concat(chunks);
-      // console.log(chunks.toString());
-      const result = convert.xml2json(body, { compact: true, spaces: 4 });
-      const flightData = JSON.parse(result);
-      const newFlightData = flightData.OTA_AirDetailsRS.FlightDetails;
-      const storeData = newFlightData.map(function (dataPrimary) {
-        const data = dataPrimary.FlightLegDetails[0];
-        var totalFlightTime = dataPrimary._attributes.TotalFlightTime;
-        var departureTime = dataPrimary._attributes.FLSDepartureDateTime;
-        var departureName = dataPrimary._attributes.FLSDepartureName;
-        var arrivalName = dataPrimary._attributes.FLSArrivalName;
-        var arrivalTime = dataPrimary._attributes.FLSArrivalDateTime;
-
-        if (data) {
-          var departureLocation =
-            data.DepartureAirport._attributes.FLSLocationName;
-          var departureCode = data.DepartureAirport._attributes.LocationCode;
-          var arrivalLocation = data.ArrivalAirport._attributes.FLSLocationName;
-          var arrivalCode = data.ArrivalAirport._attributes.LocationCode;
-          var CompanyShortName =
-            data.MarketingAirline._attributes.CompanyShortName;
-          var bookingid = CompanyShortName + Math.floor(Math.random() * 1001);
-
-          // console.log(CompanyShortName);
-          // console.log(departureCode + " " + departureLocation + " --> " +arrivalCode + " " + arrivalLocation);
-          // console.log(data.MarketingAirline._attributes);
-          const flightDetails = [
-            (bookingId = bookingid),
-            (companySrtName = CompanyShortName),
-            (arvCode = arrivalCode),
-            (arvLocation = arrivalLocation),
-            (departCode = departureCode),
-            (departLocation = departureLocation),
-            (arvTime = arrivalTime),
-            (arvName = arrivalName),
-            (departName = departureName),
-            (departTime = departureTime),
-            (totalFltTime = totalFlightTime),
-          ];
-          flightDetailsComb.push(flightDetails);
-          console.log(flightDetailsComb[0]);
-          //   res.render("lists", {
-          //     CompanyShortName: CompanyShortName,
-          //     arrivalCode: arrivalCode,
-          //     arrivalLocation: arrivalLocation,
-          //     departureCode: departureCode,
-          //     departureLocation: departureLocation,
-          //     arrivalTime: arrivalTime,
-          //     arrivalName: arrivalName,
-          //     departureName: departureName,
-          //     departureTime: departureTime,
-          //     totalFlightTime: totalFlightTime,
-          //   });
+  } else {
+    var source = req.body.sourceCity;
+    var destination = req.body.destinationCity;
+    var date = req.body.date;
+    date = date.replace(/[^a-zA-Z0-9 ]/g, "");
+    // console.log(source);
+    // console.log(destination);
+    // console.log(date);
+    const pahtUrl =
+      "/TimeTable/" + source + "/" + destination + "/" + date + "/?Compression=NONSTOP%2CDIRECT";
+    // console.log(pahtUrl);
+    const options = {
+      method: "GET",
+      hostname: "timetable-lookup.p.rapidapi.com",
+      port: null,
+      // path: "/TimeTable/BOS/LAX/20231117/",
+      path: pahtUrl,
+      
+      headers: {
+        "X-RapidAPI-Key": process.env.API_KEY,
+        "X-RapidAPI-Host": "timetable-lookup.p.rapidapi.com",
+        useQueryString: true,
+      },
+    };
+    https.get(options, function (response) {
+      const chunks = [];
+      response.on("data", function (chunk) {
+        chunks.push(chunk);
+      });
+      const flightDetailsComb = [];
+      response.on("end", function () {
+        const body = Buffer.concat(chunks);
+        // console.log(chunks.toString());
+        const result = convert.xml2json(body, { compact: true, spaces: 4 });
+        const flightData = JSON.parse(result);
+        const newFlightData = flightData.OTA_AirDetailsRS.FlightDetails;
+        if (newFlightData) {
+          const storeData = newFlightData.map(function (dataPrimary) {
+            const data = dataPrimary.FlightLegDetails[0];
+            var totalFlightTime = dataPrimary._attributes.TotalFlightTime;
+            var departureTime = dataPrimary._attributes.FLSDepartureDateTime;
+            var departureName = dataPrimary._attributes.FLSDepartureName;
+            var arrivalName = dataPrimary._attributes.FLSArrivalName;
+            var arrivalTime = dataPrimary._attributes.FLSArrivalDateTime;
+            if (data) {
+              var departureLocation =
+                data.DepartureAirport._attributes.FLSLocationName;
+              var departureCode =
+                data.DepartureAirport._attributes.LocationCode;
+              var arrivalLocation =
+                data.ArrivalAirport._attributes.FLSLocationName;
+              var arrivalCode = data.ArrivalAirport._attributes.LocationCode;
+              var CompanyShortName =
+                data.MarketingAirline._attributes.CompanyShortName;
+              var bookingid =
+                CompanyShortName + Math.floor(Math.random() * 1001);
+              // console.log(CompanyShortName);
+              // console.log(departureCode + " " + departureLocation + " --> " +arrivalCode + " " + arrivalLocation);
+              // console.log(data.MarketingAirline._attributes);
+              const flightDetails = [
+                (bookingId = bookingid),
+                (companySrtName = CompanyShortName),
+                (arvCode = arrivalCode),
+                (arvLocation = arrivalLocation),
+                (departCode = departureCode),
+                (departLocation = departureLocation),
+                (arvTime = arrivalTime),
+                (arvName = arrivalName),
+                (departName = departureName),
+                (departTime = departureTime),
+                (totalFltTime = totalFlightTime),
+              ];
+              flightDetailsComb.push(flightDetails);
+              // console.log(flightDetailsComb[0]);
+            }
+          });
         }
+        // console.log(flightdata.OTA_AirDetailsRS.FlightDetails[0].FlightLegDetails[0].MarketingAirline._attributes.CompanyShortName);
+        // console.log(flightdata.OTA_AirDetailsRS.FlightDetails[0].FlightLegDetails[0]);
+        res.render("lists", {
+          flightDetailsComb,
+        });
       });
-      // console.log(flightdata.OTA_AirDetailsRS.FlightDetails[0].FlightLegDetails[0].MarketingAirline._attributes.CompanyShortName);
-      // console.log(flightdata.OTA_AirDetailsRS.FlightDetails[0].FlightLegDetails[0]);
-      // //commments..
-      // res.write("<h1>Temperature in " + name + " is " + temp + " degrees</h1>")
-      // res.write("<p>Weather desciption is " + weatherdesc + ".</p>")
-      // res.write("<img src = " + imageurl + ">")
-      //   res.send();
-      res.render("lists", {
-        flightDetailsComb,
-      });
-      // res.send();
     });
-  });
+  }
 });
 app.listen(process.env.PORT || 3000, function () {
   console.log("Backend is Running Fine!");
 });
-
-/**
- * home route / rehne dete h ...
- * /login or /register, 2 routes create krte h ... DONE !!!
- * book press krne p fir /book route pe redirect ...
- *
- *
- *
- */
