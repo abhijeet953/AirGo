@@ -254,7 +254,7 @@ app.post("/", function (req, res) {
     // console.log(destination);
     // console.log(date);
     const pahtUrl =
-      "/TimeTable/" + source + "/" + destination + "/" + date + "/?Compression=NONSTOP%2CDIRECT";
+      "/TimeTable/" + source + "/" + destination + "/" + date;
     // console.log(pahtUrl);
     const options = {
       method: "GET",
