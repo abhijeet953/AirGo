@@ -137,9 +137,24 @@ app.post("/book", async (req, res) => {
   // var stream = doc.pipe(blobStream());
   // // Saving the pdf file in root directory.
   doc.pipe(fs.createWriteStream("example.pdf"));
+  const date = new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear();
+      data_inp = [
+        {
+          invoiceId: req.body.bookingId,
+          createdDate: date,
+          departDate: req.body.departureTime,
+          arrivalDate: req.body.arrivalTime,
+          departure: req.body.departLocation,
+          arrival: req.body.arrivalLocation,
+          arrivalCode: req.body.arrivalCode,
+          deaprtureCode: req.body.departureCode,
+          companyName: req.body.companySrtName,
+          invoiceName: (Math.random() + 1).toString(36).substring(7),
+        }
+      ];
 
   // // Adding functionality
-  doc.fontSize(27).text("This the article for GeeksforGeeks", 100, 100);
+  doc.fontSize(27).text("This is your ticket!", 100, 100);
   doc
     .addPage()
     .fontSize(15)
@@ -155,6 +170,7 @@ app.post("/book", async (req, res) => {
   console.log(array);
   console.log(__dirname + "/example.pdf");
   res.sendFile(__dirname + "/example.pdf");
+  res.send(200);
   // try{
   //   // NodePdfPrinter.printFiles(array);
   // }
