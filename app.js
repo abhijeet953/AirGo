@@ -35,7 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.set("strictQuery", true);
-const dbUrl = "mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASSWoRD + "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
+const dbUrl = "mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(
   dbUrl,
   {
