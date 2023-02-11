@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-app.set("view engine", "ejs"); 
+app.set("view engine", "ejs");
 const path = require("path");
 const https = require("https");
 const request = require("request");
@@ -18,8 +18,8 @@ const findOrCreate = require("mongoose-findorcreate");
 // Create and Print pdf --->
 const fs = require("fs");
 const { buildPathHtml, buildPathPdf } = require("./buildPaths");
-var PDFDocument = require('pdfkit');
-const NodePdfPrinter = require('node-pdf-printer');
+var PDFDocument = require("pdfkit");
+const NodePdfPrinter = require("node-pdf-printer");
 
 // Use Methods --->
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,8 +35,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.set("strictQuery", true);
+const dbUrl = "mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASSWoRD + "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(
-  "mongodb+srv://AirGoabhinav:Pandey123@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority",
+  dbUrl,
   {
     useNewUrlParser: true,
   }
@@ -62,7 +63,7 @@ passport.deserializeUser(function (id, done) {
 passport.use(
   new GoogleStrategy(
     {
-      clientID: process.env.CLIENT_ID,
+      clientID:process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL: "http://localhost:3000/auth/google/secrets",
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
@@ -128,234 +129,95 @@ app.get("/submit", function (req, res) {
     res.redirect("/login");
   }
 });
-app.get('/book', function(req, res){
-    res.sendFile(__dirname + "/example.pdf");
+app.get("/book", function (req, res) {
+  res.sendFile(__dirname + "/example.pdf");
 });
 // posts requests..
 app.post("/book", async (req, res) => {
   console.log(req.body);
-
-  // Create a document
   const doc = new PDFDocument();
-  // var stream = doc.pipe(blobStream());
-  // // Saving the pdf file in root directory.
   doc.pipe(fs.createWriteStream("example.pdf"));
-  const date = new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear();
-      data_inp = [
-        {
-          invoiceId: req.body.bookingId,
-          createdDate: date,
-          departDate: req.body.departureTime,
-          arrivalDate: req.body.arrivalTime,
-          departure: req.body.departLocation,
-          arrival: req.body.arrivalLocation,
-          arrivalCode: req.body.arrivalCode,
-          deaprtureCode: req.body.departureCode,
-          companyName: req.body.companySrtName,
-          invoiceName: (Math.random() + 1).toString(36).substring(7),
-        }
-      ];
+  const date =
+    new Date().getDate() +
+    "/" +
+    new Date().getMonth() +
+    "/" +
+    new Date().getFullYear();
+  data_inp = {
+    invoiceId: req.body.bookingId,
+    createdDate: date,
+    departDate: req.body.departureTime,
+    arrivalDate: req.body.arrivalTime,
+    departure: req.body.departLocation,
+    arrival: req.body.arrivalLocation,
+    arrivalCode: req.body.arrivalCode,
+    departureCode: req.body.departureCode,
+    companyName: req.body.companySrtName,
+    invoiceName: (Math.random() + 1).toString(36).substring(7),
+  };
+  console.log(data_inp);
+  var dateFix = data_inp.createdDate.replace("T", " ");
+  doc
+    .image("./assests/images/bg1.jpg", 50, 50, { width: 300, height: 150 })
+    .fillColor("#000")
+    .fontSize(22)
+    .text("AirGo", 275, 50, { align: "right" })
+    .fontSize(13)
+    .text(`Booking Id: ${data_inp.invoiceId}`, { align: "right" })
+    .text(`Booking Date: ${dateFix}`, { align: "right" });
 
-  // // Adding functionality
-  doc.fontSize(27).text("This is your ticket!", 100, 100);
-  // doc
-  //   // .addPage()
-  //   .fontSize(15)
-  //   .text("Generating PDF with the help of pdfkit", 100, 100);
+  doc.moveTo(50, 200).lineTo(550, 200).stroke();
+
+  doc.fontSize(30, {bold: true}).text(`${data_inp.companyName || "Airlines"}`, 50, 210, {
+    align: "center",
+  });
+  const beginningOfPage = 50;
+  const endOfPage = 550;
+
+  doc.moveTo(beginningOfPage, 240).lineTo(endOfPage, 240).stroke();
+  const tableTop = 270;
+  const departureX = 50;
+  const departTimeX = 200;
+  const arrivalX = 270;
+  const arrivalTimeX = 350;
+  const y = tableTop + 25;
+  const ny = tableTop + 50;
+
+  doc
+    .fontSize(15)
+    .text("Departure", departureX, tableTop, { bold: true })
+    // .text("Departure Time", departTimeX, tableTop)
+    .text("Arrival", arrivalX, tableTop);
+  // .text("Arrival Time", arrivalTimeX, tableTop);
+  const dp = data_inp.departure + " " + data_inp.departureCode;
+  const av = data_inp.arrival + " " + data_inp.arrivalCode;
+  doc
+    .fontSize(10)
+    .text(`${dp}`, departureX, y)
+    // .text(`${data_inp.departDate}`, departTimeX, y)
+    .text(`${av}`, arrivalX, y);
+  // .text(`${data_inp.arrivalDate}`, arrivalTimeX, y);
+  doc
+    .fontSize(10)
+    .text(`${data_inp.departDate}`, departureX, ny)
+    .text(`${data_inp.arrivalDate}`, arrivalX, ny);
+
+  doc.fontSize(10).text(`Thank You!`, 50, 700, {
+    align: "center",
+  });
+
+  doc.end();
 
   // Finalize PDF file
-  doc.end();
   const array = [
     // '\example.pdf',
-    path.resolve('/example.pdf')
-  ]
+    path.resolve("/example.pdf"),
+  ];
   console.log(array);
   console.log(__dirname + "/example.pdf");
-  // res.sendFile(__dirname + "/tmp/example.pdf");
-  // try{
-  //   res.sendFile(__dirname + "/example.pdf");
-  //   // res.sendFile(__dirname + "/tmp/example.pdf");
-  //   // NodePdfPrinter.printFiles(array);
-  // }
-  // catch(err) {
-  //   console.log(err);
-  //   // res.redirect('/');
-  // }
-  res.redirect('/book');
-
-  // const url = stream.toBlobURL('application/pdf');
-  // iframe.src = url;
-  // console.log(url);
-  //     const date = new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear();
-  //     data_inp = [
-  //       {
-  //         invoiceId: req.body.bookingId,
-  //         createdDate: date,
-  //         departDate: req.body.departureTime,
-  //         arrivalDate: req.body.arrivalTime,
-  //         departure: req.body.departLocation,
-  //         arrival: req.body.arrivalLocation,
-  //         arrivalCode: req.body.arrivalCode,
-  //         deaprtureCode: req.body.departureCode,
-  //         companyName: req.body.companySrtName,
-  //         invoiceName: (Math.random() + 1).toString(36).substring(7),
-  //       }
-  //     ];
-
-  //     const createRow = (item) => `
-  // <tr>
-  //   <td>${item.invoiceId}</td>
-  //   <td>${item.invoiceName}</td>
-  //   <td>${item.createdDate}</td>
-  //   <td>${item.departDate}</td>
-  //   <td>${item.arrivalDate}</td>
-  //   <td>${item.departure}</td>
-  //   <td>${item.arrival}</td>
-  //   <td>${item.companyName}</td>
-  // </tr>
-  // `;
-
-  //     /**
-  //      * @description Generates an `html` table with all the table rows
-  //      * @param {String} rows
-  //      * @returns {String}
-  //      */
-  //     const createTable = (rows) => `
-  //   <table>
-  //     <tr>
-  //         <th>Ticket Id</td>
-  //         <th>Name</td>
-  //         <th>Ticket Created</td>
-  //         <th>Departure Date</td>
-  //         <th>Arrival Date</td>
-  //         <th>Departure</td>
-  //         <th>Arrival</td>
-  //         <th>Vendor Name</td>
-  //     </tr>
-  //     ${rows}
-  //   </table>
-  // `;
-
-  //     /**
-  //      * @description Generate an `html` page with a populated table
-  //      * @param {String} table
-  //      * @returns {String}
-  //      */
-  //     const createHtml = (table) => `
-  //   <html>
-  //     <head>
-  //       <style>
-  //         table {
-  //           width: 100%;
-  //         }
-  //         tr {
-  //           text-align: left;
-  //           border: 1px solid black;
-  //         }
-  //         th, td {
-  //           padding: 15px;
-  //         }
-  //         tr:nth-child(odd) {
-  //           background: #CCC
-  //         }
-  //         tr:nth-child(even) {
-  //           background: #FFF
-  //         }
-  //         .no-content {
-  //           background-color: red;
-  //         }
-  //       </style>
-  //     </head>
-  //     <body>
-  //       ${table}
-  //     </body>
-  //   </html>
-  // `;
-
-  //     /**
-  //      * @description this method takes in a path as a string & returns true/false
-  //      * as to if the specified file path exists in the system or not.
-  //      * @param {String} filePath
-  //      * @returns {Boolean}
-  //      */
-  //     const doesFileExist = (filePath) => {
-  //       try {
-  //         fs.statSync(filePath); // get information of the specified file path.
-  //         return true;
-  //       } catch (error) {
-  //         return false;
-  //       }
-  //     };
-  //     try {
-  //       /* Check if the file for `html` build exists in system or not */
-  //       if (doesFileExist(buildPathHtml)) {
-  //         console.log("Deleting old build file");
-  //         /* If the file exists delete the file from system */
-  //         fs.unlinkSync(buildPathHtml);
-  //       }
-  //       /* generate rows */
-  //       const rows = data_inp.map(createRow).join("");
-  //       /* generate table */
-  //       const table = createTable(rows);
-  //       /* generate html */
-  //       const html = createHtml(table);
-  //       /* write the generated html to file */
-  //       fs.writeFileSync(buildPathHtml, html);
-  //       console.log("Succesfully created an HTML table");
-  //     } catch (error) {
-  //       console.log("Error generating table", error);
-  //     }
-  //     const printPdf = async () => {
-  //       console.log("Starting: Generating PDF Process, Kindly wait ..");
-  //       /** Launch a headleass browser */
-  //       const browser = await puppeteer.launch();
-  //       /* 1- Ccreate a newPage() object. It is created in default browser context. */
-  //       const page = await browser.newPage();
-  //       /* 2- Will open our generated `.html` file in the new Page instance. */
-  //       console.log(buildPathHtml);
-  //       await page.goto(buildPathHtml, { waitUntil: "networkidle0" });
-  //       /* 3- Take a snapshot of the PDF */
-  //       const pdf = await page.pdf({
-  //         format: "A4",
-  //         margin: {
-  //           top: "21px",
-  //           right: "21px",
-  //           bottom: "21px",
-  //           left: "21px",
-  //         },
-  //       });
-  //       /* 4- Cleanup: close browser. */
-  //       await browser.close();
-  //       console.log("Ending: Generating PDF Process");
-  //       return pdf;
-  //     };
-
-  //     const init = async () => {
-  //       try {
-  //         const pdf = await printPdf();
-  //         fs.writeFileSync(buildPathPdf, pdf);
-  //         console.log("Succesfully created an PDF table");
-  //         ptp.print(buildPathPdf, pdf);
-  //       } catch (error) {
-  //         console.log("Error generating PDF", error);
-  //       }
-  //     };
-
-  //     init();
-  // res.redirect("/");
+  res.redirect("/book");
 });
-// app.get("/printpdf", function (req, res) {
-//   const options = {};
-//   if (req.query.printer) {
-//     options.printer = req.query.printer;
-//   }
-//   const tmpFilePath = path.join(`/build.pdf`);
-//   // fs.writeFileSync(tmpFilePath, req.body, "binary");
-//   ptp.print("build.pdf", options);
-//   // fs.unlinkSync(tmpFilePath);
-//   res.status(204);
-//   res.redirect("/");
-// });
+
 app.post("/submit", function (req, res) {
   const submittedSecret = req.body.secret;
   //Once the user is authenticated and their session gets saved, their user details are saved to req.user.
@@ -439,7 +301,7 @@ app.post("/", function (req, res) {
     path: pahtUrl,
     headers: {
       "X-RapidAPI-Key": "404b98d527msh4e8bd32bc2c6824p1ec47ejsne2e84476ee2a",
-		"X-RapidAPI-Host": "timetable-lookup.p.rapidapi.com",
+      "X-RapidAPI-Host": "timetable-lookup.p.rapidapi.com",
       useQueryString: true,
     },
   };
@@ -448,7 +310,6 @@ app.post("/", function (req, res) {
     response.on("data", function (chunk) {
       chunks.push(chunk);
     });
-    var cnt = 0;
     const flightDetailsComb = [];
     response.on("end", function () {
       const body = Buffer.concat(chunks);
@@ -491,6 +352,7 @@ app.post("/", function (req, res) {
             (totalFltTime = totalFlightTime),
           ];
           flightDetailsComb.push(flightDetails);
+          console.log(flightDetailsComb[0]);
           //   res.render("lists", {
           //     CompanyShortName: CompanyShortName,
           //     arrivalCode: arrivalCode,
