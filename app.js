@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-app.set("view engine", "ejs");
+app.set("view engine", "ejs"); 
 const path = require("path");
 const https = require("https");
 const request = require("request");
@@ -18,8 +18,6 @@ const findOrCreate = require("mongoose-findorcreate");
 // Create and Print pdf --->
 const fs = require("fs");
 const { buildPathHtml, buildPathPdf } = require("./buildPaths");
-// const puppeteer = require("puppeteer");
-const ptp = require("pdf-to-printer");
 var PDFDocument = require('pdfkit');
 const NodePdfPrinter = require('node-pdf-printer');
 
@@ -137,7 +135,6 @@ app.post("/book", async (req, res) => {
   // Create a document
   const doc = new PDFDocument();
   // var stream = doc.pipe(blobStream());
-
   // // Saving the pdf file in root directory.
   doc.pipe(fs.createWriteStream("example.pdf"));
 
@@ -413,8 +410,8 @@ app.post("/", function (req, res) {
     // path: "/TimeTable/BOS/LAX/20231117/",
     path: pahtUrl,
     headers: {
-      "X-RapidAPI-Key": "97163308b7mshe68daaaa03ea1e6p1273eejsn32629ed8c483",
-      "X-RapidAPI-Host": "timetable-lookup.p.rapidapi.com",
+      "X-RapidAPI-Key": "404b98d527msh4e8bd32bc2c6824p1ec47ejsne2e84476ee2a",
+		"X-RapidAPI-Host": "timetable-lookup.p.rapidapi.com",
       useQueryString: true,
     },
   };
