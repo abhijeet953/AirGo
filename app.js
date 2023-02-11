@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("path"));
 app.use(
   session({
-    secret: "himynameisABHINAVPANDEY!@#A$%^N&*()J)(*A)123L%@I#2342",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
