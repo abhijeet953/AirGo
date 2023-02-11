@@ -155,14 +155,13 @@ app.post("/book", async (req, res) => {
 
   // // Adding functionality
   doc.fontSize(27).text("This is your ticket!", 100, 100);
-  doc
-    .addPage()
-    .fontSize(15)
-    .text("Generating PDF with the help of pdfkit", 100, 100);
+  // doc
+  //   // .addPage()
+  //   .fontSize(15)
+  //   .text("Generating PDF with the help of pdfkit", 100, 100);
 
   // Finalize PDF file
   doc.end();
-  // ptp.print('./example.pdf', doc);
   const array = [
     // '\example.pdf',
     path.resolve('/tmp/example.pdf')
@@ -171,7 +170,8 @@ app.post("/book", async (req, res) => {
   console.log(__dirname + "/tmp/example.pdf");
   // res.sendFile(__dirname + "/tmp/example.pdf");
   try{
-    res.sendFile(__dirname + "/tmp/example.pdf");
+    res.redirect(__dirname + "/tmp/example.pdf");
+    // res.sendFile(__dirname + "/tmp/example.pdf");
     // NodePdfPrinter.printFiles(array);
   }
   catch(err) {
