@@ -153,7 +153,14 @@ app.post("/book", async (req, res) => {
     path.resolve('./example.pdf')
   ]
   console.log(array);
-  NodePdfPrinter.printFiles(array);
+  res.sendFile(__dirname + "/example.pdf");
+  // try{
+  //   // NodePdfPrinter.printFiles(array);
+  // }
+  // catch(err) {
+  //   console.log(err);
+  //   // res.redirect('/');
+  // }
 
   // const url = stream.toBlobURL('application/pdf');
   // iframe.src = url;
@@ -314,7 +321,7 @@ app.post("/book", async (req, res) => {
   //     };
 
   //     init();
-  res.redirect("/");
+  // res.redirect("/");
 });
 // app.get("/printpdf", function (req, res) {
 //   const options = {};
