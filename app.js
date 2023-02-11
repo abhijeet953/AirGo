@@ -165,18 +165,19 @@ app.post("/book", async (req, res) => {
   // ptp.print('./example.pdf', doc);
   const array = [
     // '\example.pdf',
-    path.resolve('./tmp/example.pdf')
+    path.resolve('/tmp/example.pdf')
   ]
   console.log(array);
   console.log(__dirname + "/tmp/example.pdf");
-  res.sendFile(__dirname + "/tmp/example.pdf");
-  // try{
-  //   // NodePdfPrinter.printFiles(array);
-  // }
-  // catch(err) {
-  //   console.log(err);
-  //   // res.redirect('/');
-  // }
+  // res.sendFile(__dirname + "/tmp/example.pdf");
+  try{
+    res.sendFile(__dirname + "/tmp/example.pdf");
+    // NodePdfPrinter.printFiles(array);
+  }
+  catch(err) {
+    console.log(err);
+    // res.redirect('/');
+  }
 
   // const url = stream.toBlobURL('application/pdf');
   // iframe.src = url;
