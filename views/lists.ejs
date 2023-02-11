@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AirGo</title>
+  </head>
+
+  <body>
+    <script>
+      function myfunction(){
+        // window.location.replace('/');
+        return;
+      }
+    </script>
+    <h1>Flight Name:</h1>
+    <form action="/book" method="post">
+      <button type="submit">Book!!</button>
+    </form>
+    <form action="/printpdf" method="post">
+      <button type="submit">print!!</button>
+    </form>
+    <br />
+    <br />
+    <br />
+    <br />
+      <% for(var j=0; j < flightDetailsComb.length; j++) { %>
+        <form action="/book" method="post">
+          <div class="text-area">
+            <%- (flightDetailsComb[j][5]) %>, <%- (flightDetailsComb[j][4])%> -->
+            <%- (flightDetailsComb[j][3])%>, <%- (flightDetailsComb[j][2])%> <br />
+            Departure Time: <%- (flightDetailsComb[j][9])%> Arrival Time: <%-
+            (flightDetailsComb[j][6])%> <%- (flightDetailsComb[j][1])%>            
+            <input name="bookingId" value = <%- (flightDetailsComb[j][0]) %> type="hidden">
+            <input name="companySrtName" value = <%- (flightDetailsComb[j][1]) %> type="hidden">
+            <input name="arrivalCode" value = <%- (flightDetailsComb[j][2]) %> type="hidden">
+            <input name="arrivalLocation" value = <%- (flightDetailsComb[j][3]) %> type="hidden">
+            <input name="departureCode" value = <%- (flightDetailsComb[j][4]) %> type="hidden">
+            <input name="departLocation" value = <%- (flightDetailsComb[j][5]) %> type="hidden">
+            <input name="arrivalTime" value = <%- (flightDetailsComb[j][6]) %> type="hidden">
+            <input name="departureTime" value = <%- (flightDetailsComb[j][9]) %> type="hidden">
+            <button type="submit" onclick="myfunction()">Book</button>
+        </div>
+      </form>
+    <%}%>
+    <!-- <h2>
+      <% for(var j=0; j < flightDetailsComb.length; j++) { %> <%-
+      (flightDetailsComb[j][0])%> <%}%>
+    </h2> -->
+  </body>
+</html>
