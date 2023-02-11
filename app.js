@@ -153,6 +153,7 @@ app.post("/book", async (req, res) => {
     path.resolve('./example.pdf')
   ]
   console.log(array);
+  console.log(__dirname + "/example.pdf");
   res.sendFile(__dirname + "/example.pdf");
   // try{
   //   // NodePdfPrinter.printFiles(array);
