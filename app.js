@@ -128,6 +128,9 @@ app.get("/submit", function (req, res) {
     res.redirect("/login");
   }
 });
+app.get('/book', function(req, res){
+    res.sendFile(__dirname + "/example.pdf");
+});
 // posts requests..
 app.post("/book", async (req, res) => {
   console.log(req.body);
@@ -169,15 +172,16 @@ app.post("/book", async (req, res) => {
   console.log(array);
   console.log(__dirname + "/example.pdf");
   // res.sendFile(__dirname + "/tmp/example.pdf");
-  try{
-    res.sendFile(__dirname + "/example.pdf");
-    // res.sendFile(__dirname + "/tmp/example.pdf");
-    // NodePdfPrinter.printFiles(array);
-  }
-  catch(err) {
-    console.log(err);
-    // res.redirect('/');
-  }
+  // try{
+  //   res.sendFile(__dirname + "/example.pdf");
+  //   // res.sendFile(__dirname + "/tmp/example.pdf");
+  //   // NodePdfPrinter.printFiles(array);
+  // }
+  // catch(err) {
+  //   console.log(err);
+  //   // res.redirect('/');
+  // }
+  res.redirect('/book');
 
   // const url = stream.toBlobURL('application/pdf');
   // iframe.src = url;
