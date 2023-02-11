@@ -136,7 +136,7 @@ app.post("/book", async (req, res) => {
   const doc = new PDFDocument();
   // var stream = doc.pipe(blobStream());
   // // Saving the pdf file in root directory.
-  doc.pipe(fs.createWriteStream("example.pdf"));
+  doc.pipe(fs.createWriteStream("./tmp/example.pdf"));
   const date = new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear();
       data_inp = [
         {
@@ -165,11 +165,11 @@ app.post("/book", async (req, res) => {
   // ptp.print('./example.pdf', doc);
   const array = [
     // '\example.pdf',
-    path.resolve('./example.pdf')
+    path.resolve('./tmp/example.pdf')
   ]
   console.log(array);
-  console.log(__dirname + "/example.pdf");
-  res.sendFile(__dirname + "/example.pdf");
+  console.log(__dirname + "/tmp/example.pdf");
+  res.sendFile(__dirname + "/tmp/example.pdf");
   res.send(200);
   // try{
   //   // NodePdfPrinter.printFiles(array);
