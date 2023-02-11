@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("path"));
 app.use(
   session({
-    secret: process.env.SECRET,
+    secret: "himynameisABHINAVPANDEY!@#A$%^N&*()J)(*A)123L%@I#2342",
     resave: false,
     saveUninitialized: false,
   })
@@ -49,7 +49,8 @@ const userSchema = new mongoose.Schema({
   username:{
     type: String,
     unique: false
-  }
+  },
+  secret: String
 });
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
