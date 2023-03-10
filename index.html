@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="images/airplane.ico" type="image/x-icon">
     <title>AirGo</title>
 
     <link
@@ -38,183 +39,188 @@
     />
     <link rel="stylesheet" href="/resources/demos/style.css" />
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      body {
+        background: url('/public/images/bg10.jpg') no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+  
+      .form-container {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        margin-top: 50px;
+        border-radius: 10px;
+      }
+  
+      .form-control:focus {
+        box-shadow: none;
+        border-color: #17a2b8;
+      }
+    </style>
   </head>
-  <link href="css/style.css" rel="stylesheet" />
 
-  <body>
+  <body style="background-image: url('images/bg1.jpg');">
     <script>
       $(function () {
         $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" }).val()
       });
     </script>
-
-    <h1>hello!!</h1>
-    <form action="/" method="post">
-
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="source">Source City</label>
+    
+    <!-- <h1 style="text-align: center;color:white; font-size: 50px;margin:0;padding: 0; background-color:rgb(144, 199, 248);">Air Go</h1> -->
+    <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between" style="background-color: rgb(135, 206, 235); margin:0;position: static;margin-bottom: 10px;"> 
+      <a class="navbar-brand"  style="color:white" >
+        Air Go <i class="fa fa-plane" aria-hidden="true"></i></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="navbar-nav" >
+          <a class="nav-item nav-link " href="/register" style="color:white">Register<span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="/login" style="color:white">Login</a>
+          <a class="nav-item nav-link" href="/logout" style="color:white">Logout</a>
         </div>
-        <select class="custom-select" id="source" name="sourceCity">
-          <option selected>Choose...</option>
-          <option value="BOS">Boston General Edward Lawrence Logan	USA	BOS</option>
-          <option value="LAX">Los Angeles (CA) - International	USA	LAX</option>
-          <option value="BOM">Chhatrapati Shivaji International Airport - BOM </option>
-          <option value="BLR">Kempegowda International Airport - BLR</option>
-          <option value="MAA">Chennai International Airport - MAA</option>
-          <option value="CCU">Netaji Subhas Chandra Bose International Airport - CCU</option>
-          <option value="LKO">Chaudhary Charan Singh International Airport - LKO </option>
-          <option value="ATQ">Sri Guru Ram Dass Jee International Airport - ATQ </option>
-          <option value="AUH">Abu Dhabi International	United Arab Emirates	AUH </option>
-          <option value="AMS">Amsterdam Airport Schiphol	Netherlands	AMS </option>
-          <option value="HEW">Hellinikon Airport	Greece	HEW </option>
-          <option value="AKL">Auckland International Airport	New Zealand	AKL </option>
-          <option value="BGW">Baghdad International Airport	Iraq	BGW </option>
-          <option value="BWI">Washington International Airport	USA	BWI </option>
-          <option value="BCN">Barcelona	Spain	BCN </option>
-          <option value="BPT">Beaumont/Pt. Arthur (TX)	USA	BPT </option>
-          <option value="BKW">Beckley (WV)	USA	BKW  </option>
-          <option value="BHX">Birmingham - Birmingham International Airport	United Kingdom	BHX </option>
-          <option value="BRS">Bristol	United Kingdom	BRS </option>
-          <option value="BRU">Brussels - Brussels Airport	Belgium	BRU </option>
-          <option value="CAE">Columbia Metropolitan Airport	USA	CAE </option>
-          <option value="DEN"> Denver International Airport	USA	DEN </option>
-          <option value="FRA">Frankfurt Airport (Rhein-Main-Flughafen)	Germany	FRA </option>
-          <option value="CNN">Kannur International Airport - CNN </option>
-          <option value="STV">Surat International Airport - STV </option>
-          <option value="IDR">Devi Ahilya Bai Holkar Airport - IDR </option>
-          <option value="COK">Cochin International Airport - COK </option>
-          <option value="AMD">Sardar Vallabhbhai Patel International Airport - AMD </option>
-          <option value="DEL">Indira Gandhi International Airport - DEL </option>
-          <option value="GOI">Dabolim Airport - GOI </option>
-          <option value="PNQ">Pune Airport - PNQ </option>
-          <option value="TRV">Thiruvananthapuram International Airport - TRV </option>
-          <option value="CJB">Coimbatore International Airport - CJB </option>
-          <option value="CCJ">Calicut International Airport - CCJ </option>
-          <option value="BBI">Biju Patnaik International Airport - BBI </option>
-          <option value="GAU">Lokpriya Gopinath Bordoloi International Airport - GAU </option>
-          <option value="VNS">Lal Bahadur Shastri International Airport - VNS </option>
-          <option value="HYD">Rajiv Gandhi International Airport- HYD </option>
-          <option value="TRZ">Tiruchirappalli International Airport - TRZ </option>
-          <option value="NAG">Dr. Babasaheb Ambedkar International Airport - NAG </option>
-          <option value="SXR">Sheikhul Aalam International Airport - SXR </option>
-          <option value="IMF">Imphal International Airport - IMF </option>
-          <option value="JAI">Jaipur International Airport - JAI </option>
-          <option value="IXM">Madurai Airport - IXM </option>
-          <option value="IXB">Bagdogra International Airport - IXB </option>
-          <option value="PAT">Jay Prakash Narayan International Airport - PAT </option>
-          <option value="IXE">Mangalore International Airport - IXE </option>
-          <option value="IXC">Chandigarh International Airport - IXC </option>
-          <!-- <option value="3"> </option> -->
-        </select>
-      </div>
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="destination">Destination City</label>
-        </div>
-        <select class="custom-select" id="destination" name="destinationCity">
-          <option selected>Choose...</option>
-          <option value="BOS">Boston General Edward Lawrence Logan	USA	BOS</option>
-          <option value="LAX">Los Angeles (CA) - International	USA	LAX</option>
-          <option value="BOM">Chhatrapati Shivaji International Airport - BOM </option>
-          <option value="BLR">Kempegowda International Airport - BLR</option>
-          <option value="MAA">Chennai International Airport - MAA</option>
-          <option value="CCU">Netaji Subhas Chandra Bose International Airport - CCU</option>
-          <option value="LKO">Chaudhary Charan Singh International Airport - LKO </option>
-          <option value="ATQ">Sri Guru Ram Dass Jee International Airport - ATQ </option>
-          <option value="AUH">Abu Dhabi International	United Arab Emirates	AUH </option>
-          <option value="AMS">Amsterdam Airport Schiphol	Netherlands	AMS </option>
-          <option value="HEW">Hellinikon Airport	Greece	HEW </option>
-          <option value="AKL">Auckland International Airport	New Zealand	AKL </option>
-          <option value="BGW">Baghdad International Airport	Iraq	BGW </option>
-          <option value="BWI">Washington International Airport	USA	BWI </option>
-          <option value="BCN">Barcelona	Spain	BCN </option>
-          <option value="BPT">Beaumont/Pt. Arthur (TX)	USA	BPT </option>
-          <option value="BKW">Beckley (WV)	USA	BKW  </option>
-          <option value="BHX">Birmingham - Birmingham International Airport	United Kingdom	BHX </option>
-          <option value="BRS">Bristol	United Kingdom	BRS </option>
-          <option value="BRU">Brussels - Brussels Airport	Belgium	BRU </option>
-          <option value="CAE">Columbia Metropolitan Airport	USA	CAE </option>
-          <option value="DEN"> Denver International Airport	USA	DEN </option>
-          <option value="FRA">Frankfurt Airport (Rhein-Main-Flughafen)	Germany	FRA </option>
-          <option value="CNN">Kannur International Airport - CNN </option>
-          <option value="STV">Surat International Airport - STV </option>
-          <option value="IDR">Devi Ahilya Bai Holkar Airport - IDR </option>
-          <option value="COK">Cochin International Airport - COK </option>
-          <option value="AMD">Sardar Vallabhbhai Patel International Airport - AMD </option>
-          <option value="DEL">Indira Gandhi International Airport - DEL </option>
-          <option value="GOI">Dabolim Airport - GOI </option>
-          <option value="PNQ">Pune Airport - PNQ </option>
-          <option value="TRV">Thiruvananthapuram International Airport - TRV </option>
-          <option value="CJB">Coimbatore International Airport - CJB </option>
-          <option value="CCJ">Calicut International Airport - CCJ </option>
-          <option value="BBI">Biju Patnaik International Airport - BBI </option>
-          <option value="GAU">Lokpriya Gopinath Bordoloi International Airport - GAU </option>
-          <option value="VNS">Lal Bahadur Shastri International Airport - VNS </option>
-          <option value="HYD">Rajiv Gandhi International Airport- HYD </option>
-          <option value="TRZ">Tiruchirappalli International Airport - TRZ </option>
-          <option value="NAG">Dr. Babasaheb Ambedkar International Airport - NAG </option>
-          <option value="SXR">Sheikhul Aalam International Airport - SXR </option>
-          <option value="IMF">Imphal International Airport - IMF </option>
-          <option value="JAI">Jaipur International Airport - JAI </option>
-          <option value="IXM">Madurai Airport - IXM </option>
-          <option value="IXB">Bagdogra International Airport - IXB </option>
-          <option value="PAT">Jay Prakash Narayan International Airport - PAT </option>
-          <option value="IXE">Mangalore International Airport - IXE </option>
-          <option value="IXC">Chandigarh International Airport - IXC </option>
-        </select>
-      </div>
-
-      <section class="container">
-        <h2 class="py-2">Datepicker in Bootstrap 5</h2>
-        <label for="datepicker" class="col-1 col-form-label">Date</label>
-        <div class="col-5">
-          <div class="input-group date">
-            <input type="text" class="form-control" id="datepicker" name="date" autocomplete="off">
-              <span class="input-group-append">
-                <span class="input-group-text bg-light d-block">
-                  <i class="fa fa-calendar"></i>
-                </span>
-              </span>
-            </input>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="form-container">
+            <form action="/" method="post">
+              <div class="input-group mb-3" style="margin-top: 3rem; justify-content: center;">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="source"><i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px;"></i>Source City</label>
+                  </div>
+                <select class="custom-select" id="source" name="sourceCity" style="width:200px; margin-right: 5rem;">
+                  <option selected>Choose...</option>
+                  <option value="BOS">Boston General Edward Lawrence Logan	USA	BOS</option>
+                  <option value="LAX">Los Angeles (CA) - International	USA	LAX</option>
+                  <option value="BOM">Chhatrapati Shivaji International Airport - BOM </option>
+                  <option value="BLR">Kempegowda International Airport - BLR</option>
+                  <option value="MAA">Chennai International Airport - MAA</option>
+                  <option value="CCU">Netaji Subhas Chandra Bose International Airport - CCU</option>
+                  <option value="LKO">Chaudhary Charan Singh International Airport - LKO </option>
+                  <option value="ATQ">Sri Guru Ram Dass Jee International Airport - ATQ </option>
+                  <option value="AUH">Abu Dhabi International	United Arab Emirates	AUH </option>
+                  <option value="AMS">Amsterdam Airport Schiphol	Netherlands	AMS </option>
+                  <option value="HEW">Hellinikon Airport	Greece	HEW </option>
+                  <option value="AKL">Auckland International Airport	New Zealand	AKL </option>
+                  <option value="BGW">Baghdad International Airport	Iraq	BGW </option>
+                  <option value="BWI">Washington International Airport	USA	BWI </option>
+                  <option value="BCN">Barcelona	Spain	BCN </option>
+                  <option value="BPT">Beaumont/Pt. Arthur (TX)	USA	BPT </option>
+                  <option value="BKW">Beckley (WV)	USA	BKW  </option>
+                  <option value="BHX">Birmingham - Birmingham International Airport	United Kingdom	BHX </option>
+                  <option value="BRS">Bristol	United Kingdom	BRS </option>
+                  <option value="BRU">Brussels - Brussels Airport	Belgium	BRU </option>
+                  <option value="CAE">Columbia Metropolitan Airport	USA	CAE </option>
+                  <option value="DEN"> Denver International Airport	USA	DEN </option>
+                  <option value="FRA">Frankfurt Airport (Rhein-Main-Flughafen)	Germany	FRA </option>
+                  <option value="CNN">Kannur International Airport - CNN </option>
+                  <option value="STV">Surat International Airport - STV </option>
+                  <option value="IDR">Devi Ahilya Bai Holkar Airport - IDR </option>
+                  <option value="COK">Cochin International Airport - COK </option>
+                  <option value="AMD">Sardar Vallabhbhai Patel International Airport - AMD </option>
+                  <option value="DEL">Indira Gandhi International Airport - DEL </option>
+                  <option value="GOI">Dabolim Airport - GOI </option>
+                  <option value="PNQ">Pune Airport - PNQ </option>
+                  <option value="TRV">Thiruvananthapuram International Airport - TRV </option>
+                  <option value="CJB">Coimbatore International Airport - CJB </option>
+                  <option value="CCJ">Calicut International Airport - CCJ </option>
+                  <option value="BBI">Biju Patnaik International Airport - BBI </option>
+                  <option value="GAU">Lokpriya Gopinath Bordoloi International Airport - GAU </option>
+                  <option value="VNS">Lal Bahadur Shastri International Airport - VNS </option>
+                  <option value="HYD">Rajiv Gandhi International Airport- HYD </option>
+                  <option value="TRZ">Tiruchirappalli International Airport - TRZ </option>
+                  <option value="NAG">Dr. Babasaheb Ambedkar International Airport - NAG </option>
+                  <option value="SXR">Sheikhul Aalam International Airport - SXR </option>
+                  <option value="IMF">Imphal International Airport - IMF </option>
+                  <option value="JAI">Jaipur International Airport - JAI </option>
+                  <option value="IXM">Madurai Airport - IXM </option>
+                  <option value="IXB">Bagdogra International Airport - IXB </option>
+                  <option value="PAT">Jay Prakash Narayan International Airport - PAT </option>
+                  <option value="IXE">Mangalore International Airport - IXE </option>
+                  <option value="IXC">Chandigarh International Airport - IXC </option>
+                </select>
+              </div>
+              <div class="input-group mb-3" style="margin-top: 3rem; justify-content: center;">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="destination">
+                    <i class="fa fa-map-marker" aria-hidden="true" style="margin-right:5px"></i>Destination City</label>
+                </div>
+              <select class="custom-select" id="source" name="sourceCity" style="width:200px; margin-right: 5rem;">
+                <option selected>Choose...</option>
+                <option value="BOS">Boston General Edward Lawrence Logan	USA	BOS</option>
+                <option value="LAX">Los Angeles (CA) - International	USA	LAX</option>
+                <option value="BOM">Chhatrapati Shivaji International Airport - BOM </option>
+                <option value="BLR">Kempegowda International Airport - BLR</option>
+                <option value="MAA">Chennai International Airport - MAA</option>
+                <option value="CCU">Netaji Subhas Chandra Bose International Airport - CCU</option>
+                <option value="LKO">Chaudhary Charan Singh International Airport - LKO </option>
+                <option value="ATQ">Sri Guru Ram Dass Jee International Airport - ATQ </option>
+                <option value="AUH">Abu Dhabi International	United Arab Emirates	AUH </option>
+                <option value="AMS">Amsterdam Airport Schiphol	Netherlands	AMS </option>
+                <option value="HEW">Hellinikon Airport	Greece	HEW </option>
+                <option value="AKL">Auckland International Airport	New Zealand	AKL </option>
+                <option value="BGW">Baghdad International Airport	Iraq	BGW </option>
+                <option value="BWI">Washington International Airport	USA	BWI </option>
+                <option value="BCN">Barcelona	Spain	BCN </option>
+                <option value="BPT">Beaumont/Pt. Arthur (TX)	USA	BPT </option>
+                <option value="BKW">Beckley (WV)	USA	BKW  </option>
+                <option value="BHX">Birmingham - Birmingham International Airport	United Kingdom	BHX </option>
+                <option value="BRS">Bristol	United Kingdom	BRS </option>
+                <option value="BRU">Brussels - Brussels Airport	Belgium	BRU </option>
+                <option value="CAE">Columbia Metropolitan Airport	USA	CAE </option>
+                <option value="DEN"> Denver International Airport	USA	DEN </option>
+                <option value="FRA">Frankfurt Airport (Rhein-Main-Flughafen)	Germany	FRA </option>
+                <option value="CNN">Kannur International Airport - CNN </option>
+                <option value="STV">Surat International Airport - STV </option>
+                <option value="IDR">Devi Ahilya Bai Holkar Airport - IDR </option>
+                <option value="COK">Cochin International Airport - COK </option>
+                <option value="AMD">Sardar Vallabhbhai Patel International Airport - AMD </option>
+                <option value="DEL">Indira Gandhi International Airport - DEL </option>
+                <option value="GOI">Dabolim Airport - GOI </option>
+                <option value="PNQ">Pune Airport - PNQ </option>
+                <option value="TRV">Thiruvananthapuram International Airport - TRV </option>
+                <option value="CJB">Coimbatore International Airport - CJB </option>
+                <option value="CCJ">Calicut International Airport - CCJ </option>
+                <option value="BBI">Biju Patnaik International Airport - BBI </option>
+                <option value="GAU">Lokpriya Gopinath Bordoloi International Airport - GAU </option>
+                <option value="VNS">Lal Bahadur Shastri International Airport - VNS </option>
+                <option value="HYD">Rajiv Gandhi International Airport- HYD </option>
+                <option value="TRZ">Tiruchirappalli International Airport - TRZ </option>
+                <option value="NAG">Dr. Babasaheb Ambedkar International Airport - NAG </option>
+                <option value="SXR">Sheikhul Aalam International Airport - SXR </option>
+                <option value="IMF">Imphal International Airport - IMF </option>
+                <option value="JAI">Jaipur International Airport - JAI </option>
+                <option value="IXM">Madurai Airport - IXM </option>
+                <option value="IXB">Bagdogra International Airport - IXB </option>
+                <option value="PAT">Jay Prakash Narayan International Airport - PAT </option>
+                <option value="IXE">Mangalore International Airport - IXE </option>
+                <option value="IXC">Chandigarh International Airport - IXC </option>
+              </select>
+            </div>
+              <div class="form-group">
+                <div class="col-5" style="align-items: center;">
+                  <div class="input-group date" style="width: 50%; margin: 0 auto;">
+                  <input type="text" class="form-control" id="datepicker" name="date" autocomplete="off" placeholder="Dates">
+                  <span class="input-group-append">
+                    <span class="input-group-text bg-light d-block">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </span>
+                  </input>
+                  </div>
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Go</button>
+            </form>
           </div>
         </div>
-      </section>
-      <button
-        class="btn btn-md btn-warning"
-        style="margin-left: 20px"
-        type="submit"
-      >
-        Go!!
-      </button>
-    </form>
-    <a href="/login">
-      <button
-        class="btn btn-md btn-dark"
-        style="margin-left: 20px"
-        link="/login"
-      >
-        login!!
-      </button>
-    </a>
-    <br/>
-      <a href="/register">
-         <button
-        class="btn btn-md btn-primary"
-        style="margin-left: 20px"
-      >
-        register!!
-      </button>
-      </a>
-      <br/>
-      <a href="/logout">
-        <button
-       class="btn btn-md btn-primary"
-       style="margin-left: 20px"
-     >
-       logout!!
-     </button>
-     </a>
-     
+      </div>
+    </div>
+    
+  
   </body>
 </html>

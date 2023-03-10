@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+  
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="lists.css">
     <title>AirGo</title>
   </head>
 
@@ -25,10 +27,12 @@
     <br />
     <br />
     <br />
+   
+
       <% for(var j=0; j < flightDetailsComb.length; j++) { %>
         <form action="/book" method="post">
           <div class="text-area">
-            <%- (flightDetailsComb[j][5]) %>, <%- (flightDetailsComb[j][4])%> -->
+            <%- (flightDetailsComb[j][5]) %>, <%- (flightDetailsComb[j][4])%> 
             <%- (flightDetailsComb[j][3])%>, <%- (flightDetailsComb[j][2])%> <br />
             Departure Time: <%- (flightDetailsComb[j][9])%> Arrival Time: <%-
             (flightDetailsComb[j][6])%> <%- (flightDetailsComb[j][1])%>            

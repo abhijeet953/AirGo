@@ -21,7 +21,7 @@ var PDFDocument = require("pdfkit");
 
 // Use Methods --->
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("path"));
+app.use(express.static("public"));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -33,12 +33,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.set("strictQuery", true);
-const dbUrl =
-  "mongodb+srv://" +
-  process.env.DB_USER +
-  ":" +
-  process.env.DB_PASSWORD +
-  "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
+// const dbUrl =
+//   "mongodb+srv://" +
+//   process.env.DB_USER +
+//   ":" +
+//   process.env.DB_PASSWORD +
+//   "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
+const dbUrl = 'mongodb://127.0.0.1:27017'
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
 });
@@ -148,7 +149,7 @@ app.post("/book", async (req, res) => {
   console.log(data_inp);
   var dateFix = data_inp.createdDate.replace("T", " ");
   doc
-    .image("./assests/images/bg1.jpg", 50, 50, { width: 300, height: 150 })
+    .image("./public/images/bg2.jpg", 50, 50, { width: 300, height: 150 })
     .fillColor("#000")
     .fontSize(22)
     .text("AirGo", 275, 50, { align: "right" })
@@ -275,6 +276,7 @@ app.post("/", function (req, res) {
       response.on("data", function (chunk) {
         chunks.push(chunk);
       });
+      console.log(chunks.length);
       const flightDetailsComb = [];
       response.on("end", function () {
         const body = Buffer.concat(chunks);
