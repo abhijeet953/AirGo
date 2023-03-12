@@ -18,20 +18,29 @@
     />
     <link rel="stylesheet" href="css/bootstrap-social.css" />
     <link rel="stylesheet" href="css/styles.css" />
+    
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between" style="background-color: rgb(135, 206, 235); margin:0;position: static;"> 
+    <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between" style="background-color: rgba(255, 255, 255, 0.5); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); padding: 10px 20px;">
       <a class="navbar-brand"  style="color:white" >
         Air Go <i class="fa fa-plane" aria-hidden="true"></i></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-        <div class="navbar-nav" >
-          <a class="nav-item nav-link " href="/register" style="color:white">Register<span class="sr-only">(current)</span></a>
-          <a class="nav-item nav-link" href="/login" style="color:white">Login</a>
-          <a class="nav-item nav-link" href="/logout" style="color:white">Logout</a>
-        </div>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto navbar-right">
+          <li class="nav-item">
+            <a class="nav-link" href="/login" style="color: #fff; text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-left: 20px;">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register" style="color: #fff;  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-left: 20px;">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout" style="color: #fff;  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-left: 20px;">Logout</a>
+          </li>
+        </ul>
+      </div>
     </nav>
   </body>
 </html>

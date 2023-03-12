@@ -255,20 +255,20 @@ app.post("/", function (req, res) {
     // console.log(source);
     // console.log(destination);
     // console.log(date);
-    const pahtUrl =
-      "/TimeTable/" + source + "/" + destination + "/" + date;
+    const pathUrl =
+      "/TimeTable/" + source + "/" + destination + "/" + date + "/";
     // console.log(pahtUrl);
     const options = {
       method: "GET",
       hostname: "timetable-lookup.p.rapidapi.com",
       port: null,
       // path: "/TimeTable/BOS/LAX/20231117/",
-      path: pahtUrl,
+      path: pathUrl,
       
       headers: {
-        "X-RapidAPI-Key": process.env.API_KEY,
+        "X-RapidAPI-Key": "1feef3d629msh70791465d140c25p1dccb0jsnb8c3a4dd3cde",
         "X-RapidAPI-Host": "timetable-lookup.p.rapidapi.com",
-        useQueryString: true,
+        useQueryString: true
       },
     };
     https.get(options, function (response) {
@@ -276,11 +276,10 @@ app.post("/", function (req, res) {
       response.on("data", function (chunk) {
         chunks.push(chunk);
       });
-      console.log(chunks.length);
       const flightDetailsComb = [];
       response.on("end", function () {
         const body = Buffer.concat(chunks);
-        // console.log(chunks.toString());
+        console.log(chunks.toString());
         const result = convert.xml2json(body, { compact: true, spaces: 4 });
         const flightData = JSON.parse(result);
         const newFlightData = flightData.OTA_AirDetailsRS.FlightDetails;

@@ -23,6 +23,13 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <!-- Silde show -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+    <!-- Font -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -63,32 +70,40 @@
     </style>
   </head>
 
-  <body style="background-image: url('images/bg1.jpg');">
+  
     <script>
       $(function () {
         $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" }).val()
       });
     </script>
     
-    <!-- <h1 style="text-align: center;color:white; font-size: 50px;margin:0;padding: 0; background-color:rgb(144, 199, 248);">Air Go</h1> -->
-    <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between" style="background-color: rgb(135, 206, 235); margin:0;position: static;margin-bottom: 10px;"> 
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent d-flex justify-content-between" style="background-color: rgba(255, 255, 255, 0.5); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); padding: 10px 20px;">
       <a class="navbar-brand"  style="color:white" >
         Air Go <i class="fa fa-plane" aria-hidden="true"></i></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-        <div class="navbar-nav" >
-          <a class="nav-item nav-link " href="/register" style="color:white">Register<span class="sr-only">(current)</span></a>
-          <a class="nav-item nav-link" href="/login" style="color:white">Login</a>
-          <a class="nav-item nav-link" href="/logout" style="color:white">Logout</a>
-        </div>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto navbar-right">
+          <li class="nav-item">
+            <a class="nav-link" href="/login" style="color: #fff; text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-left: 20px;">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register" style="color: #fff;  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-left: 20px;">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout" style="color: #fff;  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-left: 20px;">Logout</a>
+          </li>
+        </ul>
+      </div>
     </nav>
-    <div class="container">
+    <body style="background-image: url('images/bg1.jpg');">
+    <div class="container" >
       <div class="row">
         <div class="col-md-6 offset-md-3">
-          <div class="form-container">
+          <div class="form-container" style=" background-color: rgba(255, 255, 255, 0.5); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); padding: 10px 20px;">
             <form action="/" method="post">
-              <div class="input-group mb-3" style="margin-top: 3rem; justify-content: center;">
+              <div class="input-group mb-3" style="margin-top: 3rem;">
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="source"><i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px;"></i>Source City</label>
                   </div>
@@ -144,7 +159,7 @@
                   <option value="IXC">Chandigarh International Airport - IXC </option>
                 </select>
               </div>
-              <div class="input-group mb-3" style="margin-top: 3rem; justify-content: center;">
+              <div class="input-group mb-3" style="margin-top: 1rem; ">
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="destination">
                     <i class="fa fa-map-marker" aria-hidden="true" style="margin-right:5px"></i>Destination City</label>
@@ -201,26 +216,28 @@
                 <option value="IXC">Chandigarh International Airport - IXC </option>
               </select>
             </div>
-              <div class="form-group">
-                <div class="col-5" style="align-items: center;">
-                  <div class="input-group date" style="width: 50%; margin: 0 auto;">
-                  <input type="text" class="form-control" id="datepicker" name="date" autocomplete="off" placeholder="Dates">
-                  <span class="input-group-append">
-                    <span class="input-group-text bg-light d-block">
-                      <i class="fa fa-calendar"></i>
-                    </span>
+            <div class="col-5" style="display:flex;margin-bottom: 1rem; align-items: flex-start;">
+              <div class="input-group date" style="width: 50%; margin-right: auto;">
+                <span class="input-group-append">
+                  <span class="input-group-text bg-light d-block">
+                    <i class="fa fa-calendar"></i>
                   </span>
-                  </input>
-                  </div>
-                  </div>
+                </span>
+                <input type="text" class="form-control" id="datepicker" name="date" autocomplete="off" placeholder="Date">
               </div>
+            </div>
+            
               <button type="submit" class="btn btn-primary">Go</button>
             </form>
           </div>
         </div>
       </div>
     </div>
-    
-  
+    <footer class="footer mt-auto py-3 ">
+      <div class="container text-center text-muted">
+        <span class="text-muted">Copyright &copy; 2023
+        </span>
+      </div>
+    </footer>
   </body>
 </html>
