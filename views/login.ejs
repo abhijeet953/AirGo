@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <title>AirGo</title>
-    <link rel="icon" href="images/airplane.ico" type="image/x-icon">
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="css/bootstrap-social.css" />
-    <link rel="stylesheet" href="css/styles.css" />
-    
-  
+
+<head>
+  <meta charset="utf-8" />
+  <title>AirGo</title>
+  <link rel="icon" href="images/airplane.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/bootstrap-social.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+
+
   <style>
     body {
       background-image: url('images/bg1.jpg');
@@ -29,11 +31,14 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      /* font-family: 'Josefin Sans', sans-serif; */
+      /* font-family: 'Roboto', sans-serif; */
+      font-family: 'Ubuntu', sans-serif;
     }
 
     .navbar {
-      background-color: rgba(255, 255, 255, 0.5); 
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+      background-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
       padding: 10px 20px;
       position: absolute;
       top: 0;
@@ -41,8 +46,37 @@
       width: 100%;
       z-index: 1;
     }
+
+    .footer {
+      position: absolute;
+      bottom: 0%;
+      margin: auto;
+    }
+
+    .btn-google {
+      display: inline-block;
+      font-size: 16px;
+      padding: 12px 23px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+      transition: all 0.3s ease-in-out;
+    }
+    .btn-google:hover{
+      box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.55);
+    }
+    .google-icon {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin-right: 10px;
+    }
+
+    .btn-text {
+      display: inline-block;
+      vertical-align: middle;
+    }
   </style>
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +84,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto navbar-right">
-        <a class="navbar-brand"  style="color:white" href="http://localhost:3000/">
+        <a class="navbar-brand" style="color:white" href="http://localhost:3000/">
           Air Go <i class="fa fa-plane" aria-hidden="true"></i></a>
         <li class="nav-item">
           <a class="nav-link" href="/login" style="color: #fff; text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-left: 20px;">Login</a>
@@ -67,34 +101,38 @@
 
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-6">
+      <div class="col-md-6" style="text-align: center;">
         <form action="/login" method="POST" style="background-color: rgba(255, 255, 255, 0.7); padding: 2rem; border-radius: 0.5rem;">
           <div class="card-header border-0" style="background: transparent;display:flex;justify-content: center;align-items: center;">
             Login
           </div>
-          <div class="form-group" >
-            <input type="email" class="form-control" name="username" placeholder="Email" style="margin-bottom: 1rem; margin-top: 1rem;">
+          <div class="form-group">
+            <input type="email" class="form-control" name="username" placeholder="Email" style="margin-bottom: 1rem; margin-top: 1rem; ">
           </div>
           <div class="form-group">
             <input type="password" class="form-control" name="password" placeholder="Password" style="margin-bottom: 1rem;">
           </div>
-          <button type="submit" class="btn btn-dark">Login</button><br>
-          <div class="card-body" style="display:flex;justify-content: center;align-items: center;">--OR--</div>
-          <div class="card-footer border-0" style="background: transparent;">
-            <a href="/auth/google" role="button">
-              <i class="fab fa-google"></i>
+          <button type="submit" class="btn btn-dark ">Login</button><br>
+          <div class="card-body" style="display:flex;justify-content: center;align-items: center;"> or </div>
+          <div class="btn-google border-0" style="background: transparent;">
+            <i class="fab fa-google google-icon"></i>
+            <a href="/auth/google" role="button" style="text-decoration: none; color: black; ">
+              
               Sign In with Google
             </a>
           </div>
         </form>
       </div>
     </div>
+
   </div>
-  <footer class="footer mt-auto py-3 ">
+  <div class="footer mt-auto py-3">
     <div class="container text-center text-muted">
       <span class="text-muted">Copyright &copy; 2023
       </span>
     </div>
-  </footer>
+  </div>
+
 </body>
+
 </html>

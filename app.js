@@ -33,13 +33,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.set("strictQuery", true);
-const dbUrl =
-  "mongodb+srv://" +
-  process.env.DB_USER +
-  ":" +
-  process.env.DB_PASSWORD +
-  "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
-// const dbUrl = 'mongodb://127.0.0.1:27017';
+// const dbUrl =
+//   "mongodb+srv://" +
+//   process.env.DB_USER +
+//   ":" +
+//   process.env.DB_PASSWORD +
+//   "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
+const dbUrl = 'mongodb://127.0.0.1:27017';
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
 });
@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
   email: String,
   password: String,
   googleId: String,
-  username:{
+  username: {
     type: String,
     unique: false
   },
@@ -117,9 +117,9 @@ app.get("/register", function (req, res) {
 });
 
 app.get("/book", function (req, res) {
-  if(req.isAuthenticated()){
+  if (req.isAuthenticated()) {
     res.sendFile(__dirname + "/example.pdf");
-  }else{
+  } else {
     res.redirect('/login');
   }
 });
@@ -264,7 +264,7 @@ app.post("/", function (req, res) {
       port: null,
       // path: "/TimeTable/BOS/LAX/20231117/",
       path: pahtUrl,
-      
+
       headers: {
         "X-RapidAPI-Key": process.env.API_KEY,
         "X-RapidAPI-Host": "timetable-lookup.p.rapidapi.com",
@@ -319,15 +319,19 @@ app.post("/", function (req, res) {
                 (departTime = departureTime),
                 (totalFltTime = totalFlightTime),
               ];
-              flightDetailsComb.push(flightDetails);
+                flightDetailsComb.push(flightDetails);
               // console.log(flightDetailsComb[0]);
             }
           });
         }
         // console.log(flightdata.OTA_AirDetailsRS.FlightDetails[0].FlightLegDetails[0].MarketingAirline._attributes.CompanyShortName);
         // console.log(flightdata.OTA_AirDetailsRS.FlightDetails[0].FlightLegDetails[0]);
+
+        const currentPage = req.query.page || 1; // Default to first page if query param not provided
+
         res.render("lists", {
           flightDetailsComb,
+          ctPage: currentPage
         });
       });
     });
