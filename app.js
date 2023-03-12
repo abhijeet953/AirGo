@@ -33,13 +33,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.set("strictQuery", true);
-// const dbUrl =
-//   "mongodb+srv://" +
-//   process.env.DB_USER +
-//   ":" +
-//   process.env.DB_PASSWORD +
-//   "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
-const dbUrl = 'mongodb://127.0.0.1:27017';
+const dbUrl =
+  "mongodb+srv://" +
+  process.env.DB_USER +
+  ":" +
+  process.env.DB_PASSWORD +
+  "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
+// const dbUrl = 'mongodb://127.0.0.1:27017';
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
 });
