@@ -20,7 +20,9 @@ const fs = require("fs");
 var PDFDocument = require("pdfkit");
 
 // Use Methods --->
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static("public"));
 app.use(
   session({
@@ -33,13 +35,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.set("strictQuery", true);
-// const dbUrl =
-//   "mongodb+srv://" +
-//   process.env.DB_USER +
-//   ":" +
-//   process.env.DB_PASSWORD +
-//   "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
-const dbUrl = 'mongodb://127.0.0.1:27017';
+const dbUrl =
+  "mongodb+srv://" +
+  process.env.DB_USER +
+  ":" +
+  process.env.DB_PASSWORD +
+  "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
+// const dbUrl = 'mongodb://127.0.0.1:27017';
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
 });
@@ -66,8 +68,7 @@ passport.deserializeUser(function (id, done) {
   });
 });
 passport.use(
-  new GoogleStrategy(
-    {
+  new GoogleStrategy({
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL: "https://airgoworld.onrender.com/auth/google/airgo",
@@ -76,8 +77,9 @@ passport.use(
     function (accessToken, refreshToken, profile, cb) {
       console.log(profile);
 
-      User.findOrCreate(
-        { googleId: profile.id },
+      User.findOrCreate({
+          googleId: profile.id
+        },
         function (err, user) {
           return cb(err, user);
         }
@@ -91,11 +93,15 @@ app.get("/", function (req, res) {
 });
 app.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile"] })
+  passport.authenticate("google", {
+    scope: ["profile"]
+  })
 );
 app.get(
   "/auth/google/airgo",
-  passport.authenticate("google", { failureRedirect: "/login" }),
+  passport.authenticate("google", {
+    failureRedirect: "/login"
+  }),
   function (req, res) {
     // Successful authentication, redirect to secrets.
     res.redirect("/");
@@ -137,8 +143,8 @@ app.post("/book", async (req, res) => {
   data_inp = {
     bookId: req.body.bookingId,
     createdDate: date,
-    departDate: req.body.departureTime,
-    arrivalDate: req.body.arrivalTime,
+    departDate: req.body.timeD,
+    arrivalDate: req.body.timeA,
     departure: req.body.departLocation,
     arrival: req.body.arrivalLocation,
     arrivalCode: req.body.arrivalCode,
@@ -146,21 +152,35 @@ app.post("/book", async (req, res) => {
     companyName: req.body.companySrtName,
     invoiceName: (Math.random() + 1).toString(36).substring(7),
   };
+  const randomInt = Math.floor(Math.random() * 11);
+  const imgpath = "./public/images/bg" + randomInt + ".jpg"
+
   console.log(data_inp);
   var dateFix = data_inp.createdDate.replace("T", " ");
   doc
-    .image("./public/images/bg1.jpg", 50, 50, { width: 300, height: 150 })
+    .image(imgpath, 50, 50, {
+      width: 300,
+      height: 150
+    })
     .fillColor("#000")
     .fontSize(22)
-    .text("AirGo", 275, 50, { align: "right" })
+    .text("AirGo", 275, 50, {
+      align: "right"
+    })
     .fontSize(13)
-    .text(`Booking Id: ${data_inp.bookId}`, { align: "right" })
-    .text(`Booking Date: ${dateFix}`, { align: "right" });
+    .text(`Booking Id: ${data_inp.bookId}`, {
+      align: "right"
+    })
+    .text(`Booking Date: ${dateFix}`, {
+      align: "right"
+    });
 
   doc.moveTo(50, 200).lineTo(550, 200).stroke();
 
   doc
-    .fontSize(30, { bold: true })
+    .fontSize(30, {
+      bold: true
+    })
     .text(`${data_inp.companyName || "Airlines"}`, 50, 210, {
       align: "center",
     });
@@ -178,7 +198,9 @@ app.post("/book", async (req, res) => {
 
   doc
     .fontSize(15)
-    .text("Departure", departureX, tableTop, { bold: true })
+    .text("Departure", departureX, tableTop, {
+      bold: true
+    })
     // .text("Departure Time", departTimeX, tableTop)
     .text("Arrival", arrivalX, tableTop);
   // .text("Arrival Time", arrivalTimeX, tableTop);
@@ -214,8 +236,9 @@ app.get("/logout", function (req, res) {
   });
 });
 app.post("/register", function (req, res) {
-  User.register(
-    { username: req.body.username },
+  User.register({
+      username: req.body.username
+    },
     req.body.password,
     function (err, user) {
       if (err) {
@@ -280,7 +303,10 @@ app.post("/", function (req, res) {
       response.on("end", function () {
         const body = Buffer.concat(chunks);
         // console.log(chunks.toString());
-        const result = convert.xml2json(body, { compact: true, spaces: 4 });
+        const result = convert.xml2json(body, {
+          compact: true,
+          spaces: 4
+        });
         const flightData = JSON.parse(result);
         const newFlightData = flightData.OTA_AirDetailsRS.FlightDetails;
         if (newFlightData) {
@@ -319,7 +345,7 @@ app.post("/", function (req, res) {
                 (departTime = departureTime),
                 (totalFltTime = totalFlightTime),
               ];
-                flightDetailsComb.push(flightDetails);
+              flightDetailsComb.push(flightDetails);
               // console.log(flightDetailsComb[0]);
             }
           });

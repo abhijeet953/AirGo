@@ -47,6 +47,10 @@
       z-index: 1;
     }
 
+    .btn-dark:hover{
+      box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.55);
+    }
+
     .footer {
       position: absolute;
       bottom: 0%;
@@ -102,7 +106,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6" style="text-align: center;">
-        <form action="/login" method="POST" style="background-color: rgba(255, 255, 255, 0.7); padding: 2rem; border-radius: 0.5rem;">
+        <form action="/login" method="POST" style="background-color: rgba(255, 255, 255, 0.5); padding: 2rem; border-radius: 0.5rem;">
           <div class="card-header border-0" style="background: transparent;display:flex;justify-content: center;align-items: center;">
             Login
           </div>
@@ -127,9 +131,15 @@
 
   </div>
   <div class="footer mt-auto py-3">
-    <div class="container text-center text-muted">
-      <span class="text-muted">Copyright &copy; 2023
-      </span>
+    <div class="container-fluid row">
+      <div class="col md-6 offset-1">
+        <span class="text-muted">Copyright &copy; 2023  </span>
+
+      </div>
+      <div class="col md-6" style="text-align: left;">
+        <span class="text-muted">Created by Abhijeet & Abhinav  </span>
+
+      </div>
     </div>
   </div>
 
