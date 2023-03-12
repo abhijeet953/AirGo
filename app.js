@@ -39,7 +39,7 @@ const dbUrl =
   ":" +
   process.env.DB_PASSWORD +
   "@cluster0.gwuxrej.mongodb.net/?retryWrites=true&w=majority";
-// const dbUrl = 'mongodb://127.0.0.1:27017'
+// const dbUrl = 'mongodb://127.0.0.1:27017';
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
 });
@@ -135,7 +135,7 @@ app.post("/book", async (req, res) => {
     "/" +
     new Date().getFullYear();
   data_inp = {
-    invoiceId: req.body.bookingId,
+    bookId: req.body.bookingId,
     createdDate: date,
     departDate: req.body.departureTime,
     arrivalDate: req.body.arrivalTime,
@@ -149,12 +149,12 @@ app.post("/book", async (req, res) => {
   console.log(data_inp);
   var dateFix = data_inp.createdDate.replace("T", " ");
   doc
-    .image("./public/images/bg2.jpg", 50, 50, { width: 300, height: 150 })
+    .image("./assets/images/bg1.jpg", 50, 50, { width: 300, height: 150 })
     .fillColor("#000")
     .fontSize(22)
     .text("AirGo", 275, 50, { align: "right" })
     .fontSize(13)
-    .text(`Booking Id: ${data_inp.invoiceId}`, { align: "right" })
+    .text(`Booking Id: ${data_inp.bookId}`, { align: "right" })
     .text(`Booking Date: ${dateFix}`, { align: "right" });
 
   doc.moveTo(50, 200).lineTo(550, 200).stroke();
@@ -276,7 +276,6 @@ app.post("/", function (req, res) {
       response.on("data", function (chunk) {
         chunks.push(chunk);
       });
-      console.log(chunks.length);
       const flightDetailsComb = [];
       response.on("end", function () {
         const body = Buffer.concat(chunks);
