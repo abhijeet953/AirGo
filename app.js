@@ -131,7 +131,7 @@ app.get("/book", function (req, res) {
 });
 // posts requests..
 app.post("/book", async (req, res) => {
-  // console.log(req.body);
+  console.log(req.body.departDate);
   const doc = new PDFDocument();
   doc.pipe(fs.createWriteStream("example.pdf"));
   const date =
@@ -140,18 +140,18 @@ app.post("/book", async (req, res) => {
     new Date().getMonth() +
     "/" +
     new Date().getFullYear();
-  data_inp = {
-    bookId: req.body.bookingId,
-    createdDate: date,
-    departDate: req.body.timeD,
-    arrivalDate: req.body.timeA,
-    departure: req.body.departLocation,
-    arrival: req.body.arrivalLocation,
-    arrivalCode: req.body.arrivalCode,
-    departureCode: req.body.departureCode,
-    companyName: req.body.companySrtName,
-    invoiceName: (Math.random() + 1).toString(36).substring(7),
-  };
+    data_inp = {
+      bookId: req.body.bookingId,
+      createdDate: date,
+      departDate: req.body.departureTime,
+      arrivalDate: req.body.arrivalTime,
+      departure: req.body.departLocation,
+      arrival: req.body.arrivalLocation,
+      arrivalCode: req.body.arrivalCode,
+      departureCode: req.body.departureCode,
+      companyName: req.body.companySrtName,
+      invoiceName: (Math.random() + 1).toString(36).substring(7),
+    };
   const randomInt = Math.floor(Math.random() * 11);
   const imgpath = "./public/images/bg" + randomInt + ".jpg"
 
