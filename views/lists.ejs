@@ -25,9 +25,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/bootstrap-social.css" />
   <link rel="stylesheet" href="css/styles.css" />
+  const fs = require('fs');
+
   <style>
     body {
-      background: url('images/bg1.jpg') no-repeat center center fixed;
+      background-image: url('images/bg<%= Math.floor(Math.random() * 18) %>.jpg') ;
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
@@ -125,6 +127,15 @@
       transition: background-color 0.5s ease;
       /* transition effect */
     }
+    .text-m{
+      color: #333;
+    }
+    .navbar-brand:hover {
+      text-shadow: 0px 5px 7px rgb(0, 0, 0, 1);
+    }
+    .nav-link:hover{
+      text-shadow: 0px 5px 7px rgb(0, 0, 0, 1);
+    }
   </style>
 </head>
 
@@ -140,13 +151,13 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="/login" style="color: #fff; text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-left: 20px;">Login</a>
+          <a class="nav-link" href="/login" style="color: #fff; margin-left: 20px;">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/register" style="color: #fff;  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-left: 20px;">Register</a>
+          <a class="nav-link" href="/register" style="color: #fff;  margin-left: 20px;">Register</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/logout" style="color: #fff;  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-left: 20px;">Logout</a>
+          <a class="nav-link" href="/logout" style="color: #fff;  margin-left: 20px;">Logout</a>
         </li>
       </ul>
     </div>
@@ -156,7 +167,7 @@
       <div style="margin-top: 50px">
         <!-- <h2> Flights</h2> -->
       </div>
-
+     
       <% const flightsPerPage = 20 %>
 
       <% const currentPage = (ctPage) %>
@@ -256,11 +267,11 @@
   <footer class="footer">
     <div class="container-fluid row">
       <div class="col md-6 offset-1">
-        <span class="text-muted">Copyright &copy; 2023  </span>
+        <span class="text-m">Copyright &copy; 2023  </span>
 
       </div>
       <div class="col md-6" style="text-align: left;">
-        <span class="text-muted">Created by Abhijeet & Abhinav  </span>
+        <span class="text-m">Created by Abhijeet & Abhinav  </span>
 
       </div>
     </div>
